@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Rosa Sánchez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --blush:   #f9eee8;
+  --petal:   #f2d9d0;
+  --rose:    #d4748a;
+  --rose2:   #b85570;
+  --deep:    #7a2e45;
+  --green:   #6b8f71;
+  --green2:  #4a6b50;
+  --ink:     #2c1a20;
+  --ink2:    #5c3a45;
+  --ink3:    #9a7080;
+  --gold:    #c9a96e;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--blush);
+  color: var(--ink);
+  font-family: 'Lora', Georgia, serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+.petal-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.petal {
+  position: absolute;
+  opacity: 0;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0%   { opacity: 0; transform: translateY(-60px) rotate(0deg) scale(0.8); }
+  10%  { opacity: 0.5; }
+  90%  { opacity: 0.3; }
+  100% { opacity: 0; transform: translateY(110vh) rotate(360deg) scale(1.1); }
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5rem 0 4rem;
+  position: relative;
+}
+
+.hero-wreath {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 1rem;
+}
+
+.hero-label {
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 1.2rem;
+  opacity: 0;
+  animation: bloom 1s 0.3s ease forwards;
+}
+
+.hero-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(52px, 13vw, 96px);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1;
+  color: var(--deep);
+  opacity: 0;
+  animation: bloom 1.2s 0.5s ease forwards;
+}
+
+.hero-name em {
+  display: block;
+  font-size: 0.52em;
+  color: var(--rose2);
+  letter-spacing: 0.15em;
+  font-style: normal;
+  font-weight: 400;
+  margin-top: 0.35em;
+}
+
+.hero-tagline {
+  margin-top: 2rem;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ink3);
+  line-height: 1.9;
+  max-width: 400px;
+  opacity: 0;
+  animation: bloom 1s 0.9s ease forwards;
+}
+
+.scroll-hint {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: bloom 1s 1.3s ease forwards;
+}
+
+.scroll-hint span {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+
+.scroll-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, var(--rose), transparent);
+  animation: growline 2s 1.5s ease forwards;
+  transform-origin: top;
+  transform: scaleY(0);
+}
+
+@keyframes growline { to { transform: scaleY(1); } }
+
+.floral-divider {
+  text-align: center;
+  padding: 1rem 0;
+  color: var(--rose);
+  font-size: 22px;
+  letter-spacing: 12px;
+  opacity: 0.6;
+}
+
+.section {
+  padding: 5rem 0;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+.section.visible { opacity: 1; transform: none; }
+
+.section-badge {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 2.5rem;
+}
+.section-badge::before,
+.section-badge::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--rose));
+  opacity: 0.4;
+}
+.section-badge::after {
+  background: linear-gradient(to left, transparent, var(--rose));
+}
+.section-badge span {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--rose);
+  white-space: nowrap;
+}
+
+.reasons-grid {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.reason-card {
+  background: white;
+  border: 1px solid rgba(212,116,138,0.15);
+  border-radius: 18px;
+  padding: 1.8rem 2rem 1.8rem 1.5rem;
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.reason-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(180,85,112,0.12);
+}
+
+.reason-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--rose), var(--rose2));
+  border-radius: 18px 0 0 18px;
+}
+
+.reason-card::after {
+  content: '✿';
+  position: absolute;
+  bottom: 10px; right: 16px;
+  font-size: 20px;
+  color: var(--petal);
+  pointer-events: none;
+}
+
+.reason-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--petal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.reason-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-style: italic;
+  color: var(--rose2);
+}
+
+.reason-body h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--deep);
+  margin-bottom: 0.5rem;
+}
+
+.reason-body p {
+  font-size: 14px;
+  color: var(--ink3);
+  line-height: 1.85;
+}
+
+.letter-outer {
+  position: relative;
+  border-radius: 24px;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--rose), var(--petal) 50%, var(--green));
+}
+
+.letter-card {
+  background: white;
+  border-radius: 22px;
+  padding: 3.5rem 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.letter-card::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(242,217,208,0.4), transparent 70%);
+  pointer-events: none;
+}
+
+.letter-card::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: -40px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(107,143,113,0.1), transparent 70%);
+  pointer-events: none;
+}
+
+.letter-quote-mark {
+  font-family: 'Playfair Display', serif;
+  font-size: 110px;
+  line-height: 0.75;
+  color: var(--petal);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.letter-text {
+  font-family: 'Lora', serif;
+  font-size: 17px;
+  font-style: italic;
+  line-height: 2.1;
+  color: var(--ink2);
+  white-space: pre-wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.letter-sign {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--petal);
+  text-align: right;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 19px;
+  color: var(--rose2);
+  position: relative;
+  z-index: 1;
+}
+
+.letter-sign small {
+  display: block;
+  font-family: 'Lora', serif;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  font-style: normal;
+  margin-bottom: 5px;
+}
+
+.footer {
+  padding: 4rem 0 3.5rem;
+  text-align: center;
+  border-top: 1px solid rgba(212,116,138,0.2);
+}
+
+.footer-flowers {
+  font-size: 26px;
+  letter-spacing: 10px;
+  display: block;
+  margin-bottom: 1rem;
+  animation: sway 4s ease-in-out infinite;
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50%       { transform: rotate(3deg); }
+}
+
+.footer p {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+
+@keyframes bloom {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 480px) {
+  .page { padding: 0 1.2rem; }
+  .reason-card { grid-template-columns: 1fr; gap: 0.8rem; }
+  .reason-icon { width: 40px; height: 40px; }
+  .letter-card { padding: 2.5rem 1.5rem; }
+  .letter-quote-mark { font-size: 70px; }
+}
+</style>
+</head>
+<body>
+
+<div class="petal-bg" id="petalBg"></div>
+
+<div class="page">
+
+  <section class="hero">
+    <svg class="hero-wreath" viewBox="0 0 500 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30 80 Q58 55 92 70 Q72 92 30 80Z" fill="#6b8f71" opacity="0.8"/>
+      <path d="M48 82 Q76 52 112 62 Q92 88 48 82Z" fill="#4a6b50" opacity="0.7"/>
+      <path d="M18 88 Q48 105 78 90 Q58 68 18 88Z" fill="#6b8f71" opacity="0.7"/>
+      <path d="M72 76 Q102 54 130 64 Q108 84 72 76Z" fill="#6b8f71" opacity="0.75"/>
+      <path d="M98 80 Q124 64 150 70 Q128 90 98 80Z" fill="#4a6b50" opacity="0.7"/>
+      <circle cx="152" cy="68" r="12" fill="#d4748a" opacity="0.2"/>
+      <circle cx="152" cy="68" r="9"  fill="#d4748a" opacity="0.5"/>
+      <circle cx="152" cy="68" r="5"  fill="#b85570" opacity="0.9"/>
+      <circle cx="152" cy="68" r="2"  fill="#7a2e45"/>
+      <circle cx="132" cy="56" r="8"  fill="#f2a0b0" opacity="0.6"/>
+      <circle cx="132" cy="56" r="4"  fill="#d4748a" opacity="0.8"/>
+      <circle cx="116" cy="48" r="6"  fill="#d4748a" opacity="0.5"/>
+      <circle cx="88"  cy="56" r="4" fill="white" opacity="0.8"/>
+      <circle cx="88"  cy="56" r="2" fill="#c9a96e"/>
+      <circle cx="62"  cy="62" r="3" fill="white" opacity="0.7"/>
+      <circle cx="62"  cy="62" r="1.5" fill="#c9a96e"/>
+      <path d="M470 80 Q442 55 408 70 Q428 92 470 80Z" fill="#6b8f71" opacity="0.8"/>
+      <path d="M452 82 Q424 52 388 62 Q408 88 452 82Z" fill="#4a6b50" opacity="0.7"/>
+      <path d="M482 88 Q452 105 422 90 Q442 68 482 88Z" fill="#6b8f71" opacity="0.7"/>
+      <path d="M428 76 Q398 54 370 64 Q392 84 428 76Z" fill="#6b8f71" opacity="0.75"/>
+      <path d="M402 80 Q376 64 350 70 Q372 90 402 80Z" fill="#4a6b50" opacity="0.7"/>
+      <circle cx="348" cy="68" r="12" fill="#d4748a" opacity="0.2"/>
+      <circle cx="348" cy="68" r="9"  fill="#d4748a" opacity="0.5"/>
+      <circle cx="348" cy="68" r="5"  fill="#b85570" opacity="0.9"/>
+      <circle cx="348" cy="68" r="2"  fill="#7a2e45"/>
+      <circle cx="368" cy="56" r="8"  fill="#f2a0b0" opacity="0.6"/>
+      <circle cx="368" cy="56" r="4"  fill="#d4748a" opacity="0.8"/>
+      <circle cx="384" cy="48" r="6"  fill="#d4748a" opacity="0.5"/>
+      <circle cx="412" cy="56" r="4" fill="white" opacity="0.8"/>
+      <circle cx="412" cy="56" r="2" fill="#c9a96e"/>
+      <circle cx="438" cy="62" r="3" fill="white" opacity="0.7"/>
+      <circle cx="438" cy="62" r="1.5" fill="#c9a96e"/>
+      <circle cx="250" cy="65" r="22" fill="#d4748a" opacity="0.1"/>
+      <circle cx="250" cy="65" r="16" fill="#d4748a" opacity="0.25"/>
+      <circle cx="250" cy="65" r="10" fill="#b85570" opacity="0.75"/>
+      <circle cx="250" cy="65" r="5"  fill="#7a2e45"/>
+      <circle cx="234" cy="70" r="4"  fill="#f2a0b0" opacity="0.6"/>
+      <circle cx="266" cy="70" r="4"  fill="#f2a0b0" opacity="0.6"/>
+      <circle cx="242" cy="52" r="3"  fill="#f2a0b0" opacity="0.5"/>
+      <circle cx="258" cy="52" r="3"  fill="#f2a0b0" opacity="0.5"/>
+    </svg>
+
+    <p class="hero-label">para ti, con todo mi amor</p>
+    <h1 class="hero-name">
+      Rosa Sánchez
+      <em>mi persona favorita</em>
+    </h1>
+    <p class="hero-tagline">Hay personas que llegan a tu vida y la hacen florecer sin siquiera intentarlo. Tú eres una de ellas.</p>
+
+    <div class="scroll-hint">
+      <span>descubre más</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <div class="floral-divider">✿ ❀ ✿</div>
+
+  <section class="section" id="reasons">
+    <div class="section-badge"><span>razones por las que te amo</span></div>
+    <div class="reasons-grid">
+      <div class="reason-card">
+        <div class="reason-icon"><span class="reason-num">01</span></div>
+        <div class="reason-body">
+          <h3>Tus buenos sentimientos</h3>
+          <p>Tu bondad no es casual, es parte de quien eres. Tratas a todos con gentileza y eso dice mucho de la persona tan hermosa que hay en ti.</p>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-icon"><span class="reason-num">02</span></div>
+        <div class="reason-body">
+          <h3>Tu dedicación y esfuerzo</h3>
+          <p>Eres estudiosa y comprometida con todo lo que haces. Cada vez que te veo esforzarte, me inspiras a ser mejor persona.</p>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-icon"><span class="reason-num">03</span></div>
+        <div class="reason-body">
+          <h3>Me amas tal como soy</h3>
+          <p>No me pides ser diferente. Me aceptas con mis virtudes y defectos, y ese amor incondicional es el regalo más grande que me has dado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="floral-divider">❀ ✿ ❀</div>
+
+  <section class="section" id="letter-section">
+    <div class="section-badge"><span>una carta para ti</span></div>
+    <div class="letter-outer">
+      <div class="letter-card">
+        <span class="letter-quote-mark">"</span>
+        <div class="letter-text">Rosa, hay cosas en la vida que no se pueden explicar con palabras, pero lo intentaré.
+
+Desde que llegaste, el mundo tiene más color. Tu forma de ser, tan genuina y llena de bondad, me recuerda cada día que las personas buenas de verdad existen.
+
+Me inspiras con tu dedicación, con las ganas que le pones a todo lo que haces. Pero sobre todo, me haces sentir en casa cuando estoy contigo, porque me quieres tal como soy, sin pedirme ser diferente.
+
+Eso no tiene precio, Rosa. Tú no tienes precio.</div>
+        <div class="letter-sign">
+          <small>con amor</small>
+          Mi odiosa ♥
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span class="footer-flowers">✿ ❀ ✿</span>
+    <p>hecho con amor &nbsp;·&nbsp; solo para Rosa Sánchez</p>
+  </footer>
+
+</div>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.section').forEach(el => observer.observe(el));
+
+const colors = ['#f2d9d0','#d4748a','#f9eee8','#b85570','#f2a0b0','#e8c5c5','#fce4ec'];
+const container = document.getElementById('petalBg');
+
+for (let i = 0; i < 20; i++) {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  const size = 10 + Math.random() * 16;
+  svg.setAttribute('width', size);
+  svg.setAttribute('height', size);
+  svg.setAttribute('viewBox','0 0 20 20');
+  svg.classList.add('petal');
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  const rot = Math.random() * 360;
+  svg.innerHTML = `<ellipse cx="10" cy="10" rx="4" ry="9" fill="${color}" opacity="0.75" transform="rotate(${rot} 10 10)"/>`;
+  svg.style.cssText = `
+    left:${Math.random()*100}%;
+    top:-60px;
+    animation-delay:${Math.random()*14}s;
+    animation-duration:${9+Math.random()*10}s;
+  `;
+  container.appendChild(svg);
+}
+</script>
+</body>
+</html>
